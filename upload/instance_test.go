@@ -6,8 +6,7 @@ import (
 )
 
 func Test_requestUploadPolicy(t *testing.T) {
-	var u Instance
-	resp, err := u.requestUploadPolicy()
+	resp, err := requestUploadPolicy()
 	if err != nil {
 		t.Error("requestUploadPolicy error", err)
 	}
@@ -30,24 +29,4 @@ func Test_getUploadPolicy(t *testing.T) {
 	t.Log("policy Host", u.UploadPolicy.Host)
 	t.Log("policy Policy", u.UploadPolicy.Policy)
 	t.Log("policy Signature", u.UploadPolicy.Signature)
-}
-
-func TestUploadInstance_buildUploadRequest(t *testing.T) {
-	var u Instance
-	err := u.getUploadPolicy()
-	if err != nil {
-		t.Error("buildUploadRequest error", err)
-	}
-	_, url, values, err := u.buildUploadRequest("/tmp/upload.txt")
-	if err != nil {
-		t.Error("buildUploadRequest error", err)
-	}
-	t.Logf("%s", url)
-	t.Logf("%v", values)
-}
-
-func TestUploadInstance_handleUploadResponse(t *testing.T) {
-	var u Instance
-	uuidStr := "{\"uuid\":\"b5f55fdd-c71e-41d7-aead-5373e9196514\"}"
-	u.handleUploadResponse([]byte(uuidStr))
 }

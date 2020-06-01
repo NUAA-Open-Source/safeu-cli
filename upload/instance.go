@@ -5,32 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/arcosx/Nuwa/util"
-	"io"
 	"io/ioutil"
-	"mime/multipart"
 	"net/http"
-	"os"
-	"path"
-	"strings"
-	"time"
 )
 
-// 获取上传需要的策略参数
-func (u *Instance) requestUploadPolicy() (*http.Response, error) {
-	client := &http.Client{}
-	req, err := http.NewRequest("GET", util.SAFEU_BASE_URL+"/v1/upload/policy", nil)
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println(util.InfoCode["F01"], err)
-		return nil, err
-	}
-	return resp, nil
-}
-
-// 解析上传需要的策略参数
+// 第一步 获取上传需要的策略参数
 func (u *Instance) getUploadPolicy() error {
 	var uploadPolicy UploadPolicy
-	resp, err := u.requestUploadPolicy()
+	resp, err := requestUploadPolicy()
 	if err != nil {
 		fmt.Println("getUploadPolicy requestUploadPolicy failed", err)
 	}
@@ -44,93 +26,68 @@ func (u *Instance) getUploadPolicy() error {
 	return nil
 }
 
-// 构造文件上传请求
-// fileFullPath 文件完全路径 /home/just/pig.jpg
-func (u *Instance) buildUploadRequest(fileFullPath string) (client *http.Client, url string, values map[string]io.Reader, err error) {
-	// TODO: http client 优化及可配置
-	client = &http.Client{}
-	// fileName:pig.jpg
-	fileName := path.Base(fileFullPath)
-
-	file, err := os.Open(fileFullPath)
-	if err != nil {
-		fmt.Println("buildUploadRequest open file failed ", err, "fileFullPath", fileFullPath)
-		return client, url, values, err
+// 第二步 上传文件准备
+// fileFullPaths 文件完全路径
+func (u Instance) ready(fileFullPaths []string) error {
+	for _, fileFullPath := range fileFullPaths {
+		var uploadFile UploadFile
+		uploadFile.statusCode = UploadFileReadyCode
+		err := uploadFile.buildUploadRequest(u.UploadPolicy, fileFullPath)
+		if err != nil {
+			return err
+		}
+		u.UploadFiles = append(u.UploadFiles, uploadFile)
 	}
-	fmt.Println("buildUploadRequest file ", fileName, "open success")
-	url = fmt.Sprintf("https://%s", u.UploadPolicy.Host)
-	values = map[string]io.Reader{
-		"name":                  strings.NewReader(fileName),
-		"key":                   strings.NewReader(u.UploadPolicy.Dir + fileName),
-		"policy":                strings.NewReader(u.UploadPolicy.Policy),
-		"OSSAccessKeyId":        strings.NewReader(u.UploadPolicy.AccessID),
-		"success_action_status": strings.NewReader("200"),
-		"signature":             strings.NewReader(u.UploadPolicy.Signature),
-		"callback":              strings.NewReader(u.UploadPolicy.Callback),
-		"file":                  file,
-	}
-	return client, url, values, nil
+	return nil
 }
 
-// 核心函数 上传文件
-// TODO: 上传进度条
-func (u *Instance) upload(client *http.Client, url string, values map[string]io.Reader) (respBody []byte, err error) {
-	var b bytes.Buffer
-	w := multipart.NewWriter(&b)
-	for key, r := range values {
-		var fw io.Writer
-		if x, ok := r.(io.Closer); ok {
-			defer x.Close()
-		}
-		// 如果是文件标示符 添加文件
-		if x, ok := r.(*os.File); ok {
-			if fw, err = w.CreateFormFile(key, x.Name()); err != nil {
-				return
-			}
-		} else {
-			// 添加其他表单信息
-			if fw, err = w.CreateFormField(key); err != nil {
-				return
+// 第三步 开始上传文件
+// TODO: 并发
+func (u Instance) run() {
+	for _, file := range u.UploadFiles {
+		if file.statusCode == UploadFileReadyCode {
+			err := file.upload()
+			if err != nil {
+				fmt.Println("upload file failed", err)
+				file.statusCode = UploadFileFailedCode
+			} else {
+				file.statusCode = UploadFileSuccessCode
 			}
 		}
-		if _, err = io.Copy(fw, r); err != nil {
-			return respBody, err
-		}
-
 	}
+}
 
-	_ = w.Close()
-
-	req, err := http.NewRequest("POST", url, &b)
+// 第四步汇总上传结果中的 uuid 发送 finish 函数
+func (u Instance) finish() error {
+	var finishRequest FinishRequest
+	for _, file := range u.UploadFiles {
+		if file.statusCode == UploadFileSuccessCode {
+			finishRequest.Files = append(finishRequest.Files, file.uploadResponse.UUID)
+		}
+	}
+	jsonStr, err := json.Marshal(finishRequest)
 	if err != nil {
-		return
+		fmt.Println("finish json marshal error", err)
 	}
+	resp, err := http.Post(fmt.Sprintf("%s%s", util.SAFEU_BASE_URL, "/v1/upload/finish"), "application/json", bytes.NewBuffer(jsonStr))
 
-	req.Header.Set("Content-Type", w.FormDataContentType())
-	uploadBeginTime := time.Now()
+	if err != nil {
+		fmt.Println("finish")
+	}
+	respBody, _ := ioutil.ReadAll(resp.Body)
+
+}
+
+// 辅助函数
+
+// 获取上传需要的策略参数
+func requestUploadPolicy() (*http.Response, error) {
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", util.SAFEU_BASE_URL+"/v1/upload/policy", nil)
 	resp, err := client.Do(req)
 	if err != nil {
-		return
+		fmt.Println(util.InfoCode["F01"], err)
+		return nil, err
 	}
-	// 读取返回响应
-	respBody, _ = ioutil.ReadAll(resp.Body)
-	uploadUseTime := time.Since(uploadBeginTime)
-	fmt.Println("upload use time:", uploadUseTime)
-
-	if resp.StatusCode != http.StatusOK {
-		err = fmt.Errorf("upload file to aliyun oss failed, status code:%s,response body: %s", resp.Status, string(respBody))
-		return respBody, err
-	}
-	return
-}
-
-// 核心函数 上传文件后的处理
-func (u *Instance) handleUploadResponse(respBody []byte) (err error) {
-	var uploadResponse UploadResponse
-	err = json.Unmarshal(respBody, &uploadResponse)
-	if err != nil {
-		fmt.Println("handleUploadResponse json unmarshal failed", err)
-		return err
-	}
-	return
+	return resp, nil
 }
