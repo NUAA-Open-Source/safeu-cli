@@ -29,6 +29,11 @@ type Instance struct {
 	UploadFiles  []UploadFile
 	Owner        string
 	Recode       string
+	CSRF         string // csrf token
+	Cookie       string // csrf cookie
+	Password     string // 密码
+	DownCount    int    // 下载次数
+	ExpireTime   int    // 过期时间(小时)
 }
 
 // 上传策略
@@ -44,13 +49,13 @@ type UploadPolicy struct {
 
 // 上传文件
 type UploadFile struct {
-	file           *os.File       // 文件本体
-	uploadResponse UploadResponse // 上传到OSS返回的结构体
-	statusCode     int            // 状态码
+	File           *os.File        // 文件本体
+	UploadResponse *UploadResponse // 上传到OSS返回的结构体
+	StatusCode     int             // 状态码
 
-	client *http.Client         // http client
-	url    string               // 上传地址
-	values map[string]io.Reader // 上传结构体
+	Client *http.Client         // http Client
+	Url    string               // 上传地址
+	Values map[string]io.Reader // 上传结构体
 }
 
 // 工具函数区

@@ -15,6 +15,6 @@ func TestUploadFile_buildUploadRequest(t *testing.T) {
 	if err != nil {
 		t.Error("buildUploadRequest error", err)
 	}
-	t.Logf("%s", f.url)
-	t.Logf("%v", f.values)
+	t.Logf("%s", f.Url)
+	t.Logf("%v", f.Values)
 }
