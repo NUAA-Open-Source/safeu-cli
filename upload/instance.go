@@ -3,10 +3,12 @@ package upload
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/arcosx/Nuwa/util"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
+
+	"github.com/arcosx/Nuwa/util"
 )
 
 // 第 0 步 获取CSRF Token
@@ -121,7 +123,7 @@ func requestUploadPolicy() (*http.Response, error) {
 	req, err := http.NewRequest("GET", util.SAFEU_BASE_URL+"/v1/upload/policy", nil)
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println(util.InfoCode["F01"], err)
+		fmt.Println("requestUploadPolicy error", err)
 		return nil, err
 	}
 	return resp, nil
@@ -147,4 +149,40 @@ func requestFinish(body string, csrfToken string, cookie string) (response *http
 		return response, err
 	}
 	return resp, nil
+}
+
+// 入口函数
+func Start(fileFullPaths []string) {
+	var u Instance
+	err := u.getCSRF()
+	if err != nil {
+		fmt.Println("getCSRF error", err)
+		os.Exit(0)
+	}
+	err = u.getUploadPolicy()
+	if err != nil {
+		fmt.Println("getUploadPolicy error", err)
+		os.Exit(0)
+	}
+	err = u.ready(fileFullPaths)
+	if err != nil {
+		fmt.Println("ready error", err)
+		os.Exit(0)
+	}
+	errors := u.run()
+	if len(errors) > 0 {
+		for _, err := range errors {
+			fmt.Println("run error", err)
+		}
+		os.Exit(0)
+	}
+	err = u.finish()
+	if err != nil {
+		fmt.Println("finish error", err)
+		os.Exit(0)
+	}
+	fmt.Println("Upload Finish")
+	fmt.Println("")
+	fmt.Println("Recode :", u.Recode)
+	fmt.Println("Owner :", u.Owner)
 }
