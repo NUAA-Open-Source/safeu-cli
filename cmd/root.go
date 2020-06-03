@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"github.com/arcosx/Nuwa/util"
 	"github.com/spf13/cobra"
 )
@@ -11,6 +12,7 @@ var (
 		Use:   "safeu",
 		Short: "Nuwa is Command Line For SafeU",
 		Long: `Nuwa is Command Line Tool for SafeU.
+
 You can access SafeU by via website: https://safeu.a2os.club/
 Any question please open issue on https://github.com/arcosx/Nuwa/issues/new`,
 	}
@@ -25,6 +27,7 @@ func init() {
 	rootCmd.SetHelpCommand(helpCmd)
 
 	rootCmd.AddCommand(uploadCmd)
+	rootCmd.AddCommand(getCmd)
 }
 
 // 打印版本
