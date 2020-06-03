@@ -7,9 +7,6 @@ import (
 )
 
 var (
-	// Used for flags.
-	userLicense string
-
 	rootCmd = &cobra.Command{
 		Use:   "safeu",
 		Short: "Nuwa is Command Line For SafeU",

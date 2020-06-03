@@ -1,6 +1,7 @@
 package upload
 
 import (
+	"fmt"
 	"io/ioutil"
 	"testing"
 )
@@ -107,4 +108,9 @@ func TestInstance_finish(t *testing.T) {
 
 	t.Log("Recode :", u.Recode)
 	t.Log("Owner :", u.Owner)
+}
+
+func Test_getSha256(t *testing.T) {
+	test := "hello SafeU"
+	fmt.Println("78b12bba56d6f4a6b94faa89163994a14a92f2d246460751b4a48747fd90cf81", getSha256(test))
 }

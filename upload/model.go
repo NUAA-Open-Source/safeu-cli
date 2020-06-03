@@ -70,3 +70,40 @@ type FinishResponse struct {
 	Owner  string `json:"owner"`
 	Recode string `json:"recode"`
 }
+
+// 修改请求
+// 修改提取码
+type ChangeRecode struct {
+	Auth      string `json:"auth"` // 如果设置了密码需要上传密码才可以修改提取码
+	NewReCode string `json:"new_re_code"`
+	UserToken string `json:"user_token"`
+}
+
+// 修改密码
+type ChangePassword struct {
+	Auth      string `json:"auth"` // 加密密码
+	UserToken string `json:"user_token"`
+}
+
+// 修改下载次数
+type ChangeDownCount struct {
+	NewDownCount int    `json:"new_down_count"`
+	UserToken    string `json:"user_token"`
+}
+
+// 修改过期时间
+type ChangeExpireTime struct {
+	NewExpireTime int    `json:"new_expire_time"`
+	UserToken     string `json:"user_token"`
+}
+
+// 修改返回的请求
+type ChangeRequestResponse struct {
+	Message string `json:"message"`
+}
+
+// 修改返回的错误请求
+type ChangeRequestErrorResponse struct {
+	ErrCode int    `json:"err_code"`
+	Message string `json:"message"`
+}
