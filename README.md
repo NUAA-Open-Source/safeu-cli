@@ -4,6 +4,8 @@ Command line for Safeu (https://safeu.a2os.club)
 
 ## Usage
 
+### Upload
+
 #### upload one file
 ```bash
 safeu upload filename
@@ -13,6 +15,24 @@ safeu upload filename
 
 ```bash
 safeu upload filename1 filename2 filename3
+```
+
+#### Full detail of upload command
+
+```bash
+$ ./safeu upload --help          
+Send and Share file by this command.
+SafeU is responsible for ensuring upload speed and file safety
+
+Usage:
+  safeu upload [flags]
+
+Flags:
+  -d, --downcount int     specific down count
+  -e, --expiretime int    specific expire time
+  -p, --password string   specific password
+  -r, --recode string     specific recode
+  -h, --help              help for upload
 ```
 
 #### Set Password/Download Count/Expired Time
