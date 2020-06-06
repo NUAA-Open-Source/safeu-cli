@@ -2,6 +2,7 @@
 # Nuwa
 Command line for Safeu (https://safeu.a2os.club)
 
+- [Install](#install)
 - [Usage](#usage)
   - [Upload](#upload)
     - [Upload one file](#upload-one-file)
@@ -13,6 +14,16 @@ Command line for Safeu (https://safeu.a2os.club)
 - [Demo](#demo)
 - [Compile](#compile)
 - [License](#license)
+
+## Install
+
+```bash
+$ wget -cO safeu https://github.com/arcosx/Nuwa/releases/download/v0.1-beta/safeu
+$ chmod a+x safeu
+$ sudo cp safeu /usr/local/bin/safeu
+```
+
+Congratulations, you successfully install the `safeu-cli` tool.
 
 ## Usage
 
