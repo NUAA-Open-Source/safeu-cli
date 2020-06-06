@@ -90,6 +90,7 @@ func (u *Instance) finish() error {
 	jsonStr, err := json.Marshal(finishRequest)
 	if err != nil {
 		fmt.Println("finish json marshal error", err)
+		return err
 	}
 
 	resp, err := requestFinish(string(jsonStr), u.CSRF, u.Cookie)
