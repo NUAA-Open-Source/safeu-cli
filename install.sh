@@ -10,7 +10,7 @@
 #   sh install.sh
 
 SAFEU_RELEASE="https://github.com/NUAA-Open-Source/safeu-cli/releases/download/v1.0.0-alpha/safeu-linux-x64"
-SAFEU_CN_RELEASE=""
+SAFEU_CN_RELEASE="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/safeu-cli/v1.0.0-alpha/safeu-linux-x64"
 BIN_DIR=/usr/local/bin
 BIN_FILENAME=safeu
 SAFEU_CMD=safeu
@@ -102,7 +102,7 @@ EOF
 
 main() {
     setup_color
-    # download_safeu_cli $1
+    download_safeu_cli $1
     install_scope
     install_safeu_cli
     post_install

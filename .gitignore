@@ -95,6 +95,6 @@ fabric.properties
 .idea/modules.xml
 .idea/vcs.xml
 Nuwa
-safeu
+safeu*
 
 *.zip
