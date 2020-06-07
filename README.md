@@ -22,6 +22,8 @@ A command line tool for SafeU (https://safeu.a2os.club).
 
 > If you are in China mainland, the install method in [China mainland optimized](#china-mainland-optimized) is a better choice. 
 
+> NOTICE: The following methods would download a pre-compiled safeu-cli binary file which is ONLY for 64-bit Linux. If you are using a different architecture or OS, just check the [Compile](#compile) section below to build your own binary package.
+
 `safeu-cli` is installed by running one of the following commands in your terminal. You can install this via the command-line with either `curl` or `wget`.
 
 via curl:
