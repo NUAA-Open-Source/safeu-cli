@@ -12,7 +12,7 @@
 SAFEU_RELEASE="https://github.com/NUAA-Open-Source/safeu-cli/releases/download/v1.0.0-alpha/safeu-linux-x64"
 SAFEU_CN_RELEASE="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/safeu-cli/v1.0.0-alpha/safeu-linux-x64"
 BIN_DIR=/usr/local/bin
-BIN_FILENAME=safeu
+BIN_FILENAME=safeu.tmp
 SAFEU_CMD=safeu
 IS_LOCAL=0
 
@@ -82,6 +82,7 @@ install_safeu_cli() {
 }
 
 post_install() {
+    rm -f ${BIN_FILENAME}
     printf ${GREEN}
 
     cat <<-'EOF'
