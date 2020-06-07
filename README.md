@@ -15,6 +15,7 @@ A command line tool for SafeU (https://safeu.a2os.club).
     - [Full detail of get command](#full-detail-of-get-command)
 - [Demo](#demo)
 - [Compile](#compile)
+- [Known issues](#known-issues)
 - [License](#license)
 
 ## Install
@@ -128,6 +129,8 @@ make build
 # build binary for Linux
 make linux-build
 ```
+
+## Known issues
 
 ## License
 
