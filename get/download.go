@@ -11,7 +11,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/arcosx/Nuwa/util"
+	"github.com/NUAA-Open-Source/safeu-cli/util"
 )
 
 func (dm *DownloadModel) getCsrf() error {

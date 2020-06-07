@@ -3,18 +3,18 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/arcosx/Nuwa/util"
+	"github.com/NUAA-Open-Source/safeu-cli/util"
 	"github.com/spf13/cobra"
 )
 
 var (
 	rootCmd = &cobra.Command{
 		Use:   "safeu",
-		Short: "Nuwa is Command Line For SafeU",
-		Long: `Nuwa is Command Line Tool for SafeU.
+		Short: "SafeU CLI is the command line for SafeU",
+		Long: `SafeU CLI is the command line tool for SafeU.
 
 You can access SafeU by via website: https://safeu.a2os.club/
-Any question please open issue on https://github.com/arcosx/Nuwa/issues/new`,
+Any question please open issue on https://github.com/NUAA-Open-Source/safeu-cli/issues/new`,
 	}
 )
 
@@ -33,7 +33,7 @@ func init() {
 // 打印版本
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "The version number of Nuwa",
+	Short: "The version number of SafeU CLI tool",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(util.VERSION)
 	},
