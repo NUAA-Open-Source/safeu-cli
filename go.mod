@@ -1,4 +1,4 @@
-module github.com/arcosx/Nuwa
+module github.com/NUAA-Open-Source/safeu-cli
 
 go 1.14
 

@@ -3,8 +3,8 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/arcosx/Nuwa/upload"
-	"github.com/arcosx/Nuwa/util"
+	"github.com/NUAA-Open-Source/safeu-cli/upload"
+	"github.com/NUAA-Open-Source/safeu-cli/util"
 
 	"github.com/spf13/cobra"
 )

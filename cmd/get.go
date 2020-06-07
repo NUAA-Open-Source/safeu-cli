@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/arcosx/Nuwa/get"
+	"github.com/NUAA-Open-Source/safeu-cli/get"
 	"github.com/spf13/cobra"
 )
 

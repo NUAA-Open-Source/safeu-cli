@@ -1,8 +1,10 @@
 <!-- omit in toc -->
-# Nuwa
-Command line for Safeu (https://safeu.a2os.club)
+# SafeU CLI
+
+A command line tool for SafeU (https://safeu.a2os.club).
 
 - [Install](#install)
+  - [China mainland optimized](#china-mainland-optimized)
 - [Usage](#usage)
   - [Upload](#upload)
     - [Upload one file](#upload-one-file)
@@ -17,13 +19,37 @@ Command line for Safeu (https://safeu.a2os.club)
 
 ## Install
 
+> If you are in China mainland, the install method in [China mainland optimized](#china-mainland-optimized) is a better choice. 
+
+`safeu-cli` is installed by running one of the following commands in your terminal. You can install this via the command-line with either `curl` or `wget`.
+
+via curl:
+
 ```bash
-$ wget -cO safeu https://github.com/arcosx/Nuwa/releases/download/v0.1-beta/safeu
-$ chmod a+x safeu
-$ sudo cp safeu /usr/local/bin/safeu
+$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh)"
 ```
 
-Congratulations, you successfully install the `safeu-cli` tool.
+via wget:
+
+```bash
+$ sh -c "$(wget -qO- https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh)"
+```
+
+Congratulations, you have successfully installed the `safeu-cli` tool :tada:
+
+### China mainland optimized
+
+via curl:
+
+```bash
+$ sh -c "$(curl -fsSL https://gitee.com/A2OS/safeu-cli/raw/master/install.sh) cn"
+```
+
+via wget:
+
+```bash
+$ sh -c "$(wget -qO- https://gitee.com/A2OS/safeu-cli/raw/master/install.sh) cn"
+```
 
 ## Usage
 
