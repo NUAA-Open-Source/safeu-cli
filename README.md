@@ -119,7 +119,7 @@ Flags:
 
 ## Demo
 
-[![asciicast](https://asciinema.org/a/RkBqLlYnMA3bzXddJsbBRw5Ae.svg)](https://asciinema.org/a/RkBqLlYnMA3bzXddJsbBRw5Ae)
+[![asciicast](https://asciinema.org/a/iZgrbrUpli4kxOQlOBco9jamH.svg)](https://asciinema.org/a/iZgrbrUpli4kxOQlOBco9jamH)
 
 ## Compile
 
