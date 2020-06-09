@@ -108,7 +108,7 @@ EOF
 
 main() {
     setup_color
-    # download_safeu_cli $1
+    download_safeu_cli $1
     install_scope
     install_safeu_cli
     post_install
