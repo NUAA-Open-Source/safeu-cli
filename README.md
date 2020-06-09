@@ -1,6 +1,8 @@
 <!-- omit in toc -->
 # SafeU CLI
 
+![Install](https://github.com/NUAA-Open-Source/safeu-cli/workflows/Install/badge.svg) | ![Go](https://github.com/NUAA-Open-Source/safeu-cli/workflows/Go/badge.svg)
+
 A command line tool for SafeU (https://safeu.a2os.club).
 
 - [Install](#install)
