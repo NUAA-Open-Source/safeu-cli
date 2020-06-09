@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/NUAA-Open-Source/safeu-cli/util"
 )
@@ -362,10 +363,13 @@ func requestExpireTime(recode string, changeExpireTime ChangeExpireTime, csrfTok
 		fmt.Println("requestExpireTime changeRequestResponse json unmarshal failed", err)
 		return err
 	}
-	if changeRequestResponse.Message != "ok" {
+	// 修改时间正确返回内容是文件过期时间的时间戳 2020-06-08T20:53:41+08:00
+	t, err := time.Parse(time.RFC3339, changeRequestResponse.Message)
+	if err != nil {
 		fmt.Println("requestExpireTime response show some problem : ", respBody)
 		return fmt.Errorf("requestExpireTime reponse error %s", respBody)
 	}
+	fmt.Println(fmt.Sprintf("Change file ExpireTime Success.File expire time will be :%s", t.Format("Mon Jan _2 15:04:05 2006")))
 	return nil
 }
 
