@@ -7,13 +7,16 @@ jobs:
     name: Install
     runs-on: ubuntu-latest
     steps:
-    # - name: Check out the latest code
-    #   uses: actions/checkout@v2
+      - name: Check out the latest code
+        uses: actions/checkout@v2
       - name: run install script
         # uses: docker://alpine:latest
         run: |
           alias wget="wget --no-check-certificate"
           yes | sh -c "$(echo "alias wget=\"wget --no-check-certificate\""; wget -qO- https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh)"
+
+      # - name: run install script
+      #   run: sh ./install.sh <<< Y
 
       - name: test safeu cli
         run: safeu version
