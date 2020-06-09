@@ -12,7 +12,7 @@
 SAFEU_RELEASE="https://github.com/NUAA-Open-Source/safeu-cli/releases/download/v1.0.0-alpha/safeu-linux-x64"
 SAFEU_CN_RELEASE="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/safeu-cli/v1.0.0-alpha/safeu-linux-x64"
 BIN_DIR=/usr/local/bin
-BIN_FILENAME=safeu
+BIN_FILENAME=safeu.tmp
 SAFEU_CMD=safeu
 IS_LOCAL=0
 
@@ -41,7 +41,7 @@ setup_color() {
 }
 
 download_safeu_cli() {
-    if [ "$1" == "cn" ]; then
+    if [ "$1" = "cn" ]; then
         wget -cO ${BIN_FILENAME} ${SAFEU_CN_RELEASE} || {
             error "cannot download safeu-cli by ${SAFEU_CN_RELEASE}"
             exit 1
@@ -56,10 +56,10 @@ download_safeu_cli() {
 }
 
 install_scope() {
-    echo -e "${YELLOW}Install safeu command tool globally (require sudo permission later) ? (y/n, defualt: y) :\c"
+    printf "${YELLOW}Install safeu command tool globally (require sudo permission later) ? [Y/N, Defualt: Y]: "
     read isGlobal
 
-    if [[ "$isGlobal" == "n" || "$isGlobal" == "N" ]]; then
+    if [ "$isGlobal" = "n" ]  || [ "$isGlobal" = "N" ] ; then
         BIN_DIR=${HOME}/.local/bin
         IS_LOCAL=1
     else
@@ -82,6 +82,7 @@ install_safeu_cli() {
 }
 
 post_install() {
+    rm -f ${BIN_FILENAME}
     printf ${GREEN}
 
     cat <<-'EOF'
@@ -96,13 +97,13 @@ post_install() {
                 https://github.com/NUAA-Open-Source/safeu-cli/issues
         
 EOF
-    echo "        Current installed safeu-cli version: $(safeu version)"
+    printf "        Current installed safeu-cli version: $(safeu version)\n"
     printf ${RESET}
 }
 
 main() {
     setup_color
-    download_safeu_cli $1
+    # download_safeu_cli $1
     install_scope
     install_safeu_cli
     post_install
