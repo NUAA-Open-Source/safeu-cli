@@ -56,7 +56,14 @@ download_safeu_cli() {
 }
 
 install_scope() {
-    printf "${YELLOW}Install safeu command tool globally (require sudo permission later) ? [Y/N, Defualt: Y]: "
+    if [ "$(id -u)" -eq "0" ]; then
+        # the user has privileges, do not need to use sudo
+        IS_LOCAL=1
+        BIN_DIR=/usr/local/bin
+        return
+    fi
+
+    printf "${YELLOW}Install safeu command tool globally (require sudo permission later) ? [Y/N, Default: Y]: "
     read isGlobal
 
     if [ "$isGlobal" = "n" ]  || [ "$isGlobal" = "N" ] ; then
@@ -83,7 +90,7 @@ install_safeu_cli() {
 
 post_install() {
     rm -f ${BIN_FILENAME}
-    printf ${GREEN}
+    printf "$GREEN"
 
     cat <<-'EOF'
          ____         __      _   _    ____ _     ___ 
@@ -98,7 +105,7 @@ post_install() {
         
 EOF
     printf "        Current installed safeu-cli version: $(safeu version)\n"
-    printf ${RESET}
+    printf "$RESET"
 }
 
 main() {
