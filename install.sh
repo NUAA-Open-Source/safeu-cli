@@ -63,7 +63,7 @@ install_scope() {
         return
     fi
 
-    printf "${YELLOW}Install safeu command tool globally (require sudo permission later) ? [Y/N, Defualt: Y]: "
+    printf "${YELLOW}Install safeu command tool globally (require sudo permission later) ? [Y/N, Default: Y]: "
     read isGlobal
 
     if [ "$isGlobal" = "n" ]  || [ "$isGlobal" = "N" ] ; then
