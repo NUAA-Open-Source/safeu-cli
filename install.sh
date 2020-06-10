@@ -57,7 +57,9 @@ download_safeu_cli() {
 
 install_scope() {
     if [ "$(id -u)" -eq "0" ]; then
-        IS_LOCAL=0
+        # the user has privileges, do not need to use sudo
+        IS_LOCAL=1
+        BIN_DIR=/usr/local/bin
         return
     fi
 
