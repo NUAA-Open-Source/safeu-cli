@@ -64,7 +64,7 @@ setup_color() {
 }
 
 download_safeu_cli() {
-    if [ IS_CN -eq 1 ]; then
+    if [ $IS_CN -eq 1 ]; then
         wget -cO ${BIN_FILENAME} ${SAFEU_CN_RELEASE} || {
             error "cannot download safeu-cli by ${SAFEU_CN_RELEASE}"
             exit 1
@@ -138,9 +138,11 @@ get_args() {
                 ;;
             --version)
                 show_version
+		exit 0
                 ;;
             --help)
                 show_help
+		exit 0
                 ;;
             *)
                 printf "${RED}Invalid option: '%s', check the help message below!${RESET}\n\n" $arg
