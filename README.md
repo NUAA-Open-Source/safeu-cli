@@ -8,6 +8,7 @@ A command line tool for SafeU (https://safeu.a2os.club).
 
 - [Install](#install)
   - [Install safeu-cli just for current user](#install-safeu-cli-just-for-current-user)
+  - [China mainland optimized](#china-mainland-optimized)
 - [Usage](#usage)
   - [Upload](#upload)
     - [Upload one file](#upload-one-file)
@@ -55,6 +56,7 @@ via wget:
 
 ```bash
 $ sh -c "$(wget -qO- https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh) --local"
+```
 
 ### China mainland optimized
 
