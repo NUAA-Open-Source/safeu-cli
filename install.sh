@@ -138,11 +138,11 @@ get_args() {
                 ;;
             --version)
                 show_version
-		exit 0
+                exit 0
                 ;;
             --help)
                 show_help
-		exit 0
+                exit 0
                 ;;
             *)
                 printf "${RED}Invalid option: '%s', check the help message below!${RESET}\n\n" $arg
