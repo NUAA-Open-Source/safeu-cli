@@ -14,8 +14,20 @@ jobs:
       #     alias wget="wget --no-check-certificate"
       #     sh -c "$(echo "alias wget=\"wget --no-check-certificate\""; yes | wget -qO- https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh)"
 
+      - name: print install script help message
+        run: sh ./install.sh --help
+      
+      - name: print install script version for safeu-cli
+        run: sh ./install.sh --version
+
       - name: run install script
-        run: sh ./install.sh <<< Y
+        run: sh ./install.sh
+
+      - name: test safeu cli
+        run: safeu version
+
+      - name: run install script with local option
+        run: sh ./install.sh --local
 
       - name: test safeu cli
         run: safeu version
