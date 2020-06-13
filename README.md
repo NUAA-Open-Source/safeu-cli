@@ -24,7 +24,7 @@ A command line tool for SafeU (https://safeu.a2os.club).
 
 ## Install
 
-> If you are in China mainland, the install method in [China mainland optimized](#china-mainland-optimized) is a better choice. 
+> If you are in China mainland, the install methods in [China mainland optimized](#china-mainland-optimized) is a better choice. 
 
 > NOTICE: The following methods would download a pre-compiled safeu-cli binary file which is ONLY for 64-bit Linux. If you are using a different architecture or OS, just check the [Compile](#compile) section below to build your own binary package.
 
@@ -93,7 +93,7 @@ $ safeu upload filename1 filename2 filename3
 
 Ref to [Full deteail of upload command](#full-detail-of-upload-command).
 
-Examples for this section will be supplement lately.
+Examples for this section will be supplemented lately.
 
 #### Full detail of upload command
 
