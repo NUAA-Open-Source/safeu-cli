@@ -14,8 +14,36 @@ jobs:
       #     alias wget="wget --no-check-certificate"
       #     sh -c "$(echo "alias wget=\"wget --no-check-certificate\""; yes | wget -qO- https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh)"
 
+      - name: print install script help message
+        run: |
+          sh ./install.sh --help
+          # should not have safeu command
+          if [ -x "$(command -v safeu)" ]; then echo "should not have the safeu command"; exit 1; else exit 0; fi
+      
+      - name: print install script version for safeu-cli
+        run: |
+          sh ./install.sh --version
+          # should not have safeu command
+          if [ -x "$(command -v safeu)" ]; then echo "should not have the safeu command"; exit 1; else exit 0; fi
+
       - name: run install script
-        run: sh ./install.sh <<< Y
+        run: sh ./install.sh
 
       - name: test safeu cli
         run: safeu version
+
+      - name: remove the safeu cli
+        run: |
+          sudo rm -rf /usr/local/bin/safeu
+          # should not have safeu command
+          if [ -x "$(command -v safeu)" ]; then  echo "should not have the safeu command"; exit 1; else exit 0; fi
+
+      - name: run install script with local option
+        run: |
+          export PATH=$HOME/.local/bin:$PATH
+          sh ./install.sh --local
+
+      - name: test safeu cli
+        run: |
+          export PATH=$HOME/.local/bin:$PATH
+          safeu version

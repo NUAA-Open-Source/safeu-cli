@@ -15,7 +15,30 @@ BIN_DIR=/usr/local/bin
 BIN_FILENAME=safeu.tmp
 SAFEU_CMD=safeu
 IS_LOCAL=0
+IS_CN=0
+VERSION=v1.0.0-alpha
 
+
+show_help() {
+    cat <<- EOF
+SafeU CLI tool install script.
+
+Usage: ./install.sh [options]
+
+Options:
+    --local     Install safeu-cli locally (in ~/.local/bin).
+    --cn        Use china mainland optimized install script.
+    --version   Show the safeu-cli release version.
+    --help      Show this help message.
+
+You can access SafeU by via website: https://safeu.a2os.club/
+Any question please open issue on: https://github.com/NUAA-Open-Source/safeu-cli/issues/new
+EOF
+}
+
+show_version() {
+    echo "$VERSION"
+}
 
 error() {
 	echo ${RED}"Error: $@"${RESET} >&2
@@ -41,7 +64,7 @@ setup_color() {
 }
 
 download_safeu_cli() {
-    if [ "$1" = "cn" ]; then
+    if [ $IS_CN -eq 1 ]; then
         wget -cO ${BIN_FILENAME} ${SAFEU_CN_RELEASE} || {
             error "cannot download safeu-cli by ${SAFEU_CN_RELEASE}"
             exit 1
@@ -56,19 +79,15 @@ download_safeu_cli() {
 }
 
 install_scope() {
-    if [ "$(id -u)" -eq "0" ]; then
+    if [ "$(id -u)" = "0" ]; then
         # the user has privileges, do not need to use sudo
         IS_LOCAL=1
         BIN_DIR=/usr/local/bin
         return
     fi
 
-    printf "${YELLOW}Install safeu command tool globally (require sudo permission later) ? [Y/N, Default: Y]: "
-    read isGlobal
-
-    if [ "$isGlobal" = "n" ]  || [ "$isGlobal" = "N" ] ; then
+    if [ $IS_LOCAL -eq 1 ] ; then
         BIN_DIR=${HOME}/.local/bin
-        IS_LOCAL=1
     else
         BIN_DIR=/usr/local/bin
     fi
@@ -108,12 +127,44 @@ EOF
     printf "$RESET"
 }
 
+get_args() {
+    for arg in "$@"; do
+        case $arg in
+            --cn)
+                IS_CN=1
+                ;;
+            --local)
+                IS_LOCAL=1
+                ;;
+            --version)
+                show_version
+                exit 0
+                ;;
+            --help)
+                show_help
+                exit 0
+                ;;
+            *)
+                printf "${RED}Invalid option: '%s', check the help message below!${RESET}\n\n" $arg
+                show_help
+                exit 1
+                ;;
+        esac
+    done
+}
+
 main() {
+    # preparations
     setup_color
-    download_safeu_cli $1
+    get_args $@
     install_scope
+
+    # download & install safeu-cli
+    download_safeu_cli
     install_safeu_cli
+
+    # print success message
     post_install
 }
 
-main "$@"
+main $@

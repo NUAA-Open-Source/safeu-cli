@@ -1,11 +1,13 @@
 <!-- omit in toc -->
 # SafeU CLI
 
-![Install](https://github.com/NUAA-Open-Source/safeu-cli/workflows/Install/badge.svg) | ![Go](https://github.com/NUAA-Open-Source/safeu-cli/workflows/Go/badge.svg)
+![Install](https://github.com/NUAA-Open-Source/safeu-cli/workflows/Install/badge.svg)
+![Go](https://github.com/NUAA-Open-Source/safeu-cli/workflows/Go/badge.svg)
 
 A command line tool for SafeU (https://safeu.a2os.club).
 
 - [Install](#install)
+  - [Install safeu-cli just for current user](#install-safeu-cli-just-for-current-user)
   - [China mainland optimized](#china-mainland-optimized)
 - [Usage](#usage)
   - [Upload](#upload)
@@ -22,7 +24,7 @@ A command line tool for SafeU (https://safeu.a2os.club).
 
 ## Install
 
-> If you are in China mainland, the install method in [China mainland optimized](#china-mainland-optimized) is a better choice. 
+> If you are in China mainland, the install methods in [China mainland optimized](#china-mainland-optimized) is a better choice. 
 
 > NOTICE: The following methods would download a pre-compiled safeu-cli binary file which is ONLY for 64-bit Linux. If you are using a different architecture or OS, just check the [Compile](#compile) section below to build your own binary package.
 
@@ -42,19 +44,35 @@ $ sh -c "$(wget -qO- https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cl
 
 Congratulations, you have successfully installed the `safeu-cli` tool :tada:
 
-### China mainland optimized
+### Install safeu-cli just for current user
 
 via curl:
 
 ```bash
-$ sh -c "$(curl -fsSL https://gitee.com/A2OS/safeu-cli/raw/master/install.sh) cn"
+$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh) --local"
 ```
 
 via wget:
 
 ```bash
-$ sh -c "$(wget -qO- https://gitee.com/A2OS/safeu-cli/raw/master/install.sh) cn"
+$ sh -c "$(wget -qO- https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh) --local"
 ```
+
+### China mainland optimized
+
+via curl:
+
+```bash
+$ sh -c "$(curl -fsSL https://gitee.com/A2OS/safeu-cli/raw/master/install.sh) --cn"
+```
+
+via wget:
+
+```bash
+$ sh -c "$(wget -qO- https://gitee.com/A2OS/safeu-cli/raw/master/install.sh) --cn"
+```
+
+> If you want to install `safeu-cli` locally by using the china mainland optimized script, just add `--local` option after the `--cn`.
 
 ## Usage
 
@@ -75,7 +93,7 @@ $ safeu upload filename1 filename2 filename3
 
 Ref to [Full deteail of upload command](#full-detail-of-upload-command).
 
-Examples for this section will be supplement lately.
+Examples for this section will be supplemented lately.
 
 #### Full detail of upload command
 
