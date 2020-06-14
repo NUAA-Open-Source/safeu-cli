@@ -9,14 +9,15 @@
 #   wget https://raw.githubusercontent.com/NUAA-Open-Source/safeu-cli/master/install.sh
 #   sh install.sh
 
-SAFEU_RELEASE="https://github.com/NUAA-Open-Source/safeu-cli/releases/download/v1.0.0-alpha/safeu-linux-x64"
-SAFEU_CN_RELEASE="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/safeu-cli/v1.0.0-alpha/safeu-linux-x64"
+SAFEU_RELEASE="https://github.com/NUAA-Open-Source/safeu-cli/releases/download/v1.0.0-beta/safeu-linux-x64"
+SAFEU_CN_RELEASE="https://triplez-public-1251926021.cos.ap-shanghai.myqcloud.com/safeu-cli/v1.0.0-beta/safeu-linux-x64"
+VERSION=v1.0.0-beta
+
 BIN_DIR=/usr/local/bin
 BIN_FILENAME=safeu.tmp
 SAFEU_CMD=safeu
 IS_LOCAL=0
 IS_CN=0
-VERSION=v1.0.0-alpha
 
 
 show_help() {
